@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Sample Payment</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">User Name</string>
+    <string name="nav_header_subtitle">user.mail@xyz.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_easy_transfer">Easy transfer</string>
+    <string name="menu_profile">Profile</string>
+    <string name="split">Split</string>
+    <string name="receive">Receive</string>
+    <string name="send">Send</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="contact_list">Contact List</string>
+    <string name="saket_newaskar">Saket Newaskar</string>
+    <string name="welcome_to_android">Welcome to Android</string>
+</resources>
