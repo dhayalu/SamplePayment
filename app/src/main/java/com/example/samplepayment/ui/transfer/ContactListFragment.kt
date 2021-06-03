@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -19,7 +20,6 @@ import com.example.samplepayment.HomeActivity
 import com.example.samplepayment.R
 import com.example.samplepayment.adapter.ContactAdapter
 import com.example.samplepayment.model.Contact
-import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.fragment_contact_list.*
 
 
@@ -35,11 +35,7 @@ class ContactListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        recycler_view?.layoutManager = LinearLayoutManager(activity?.applicationContext)
 
-        sharedPreferences = this.requireActivity()
-            .getSharedPreferences("pref", Context.MODE_PRIVATE)
-        enableRuntimePermission()
     }
 
     override fun onCreateView(
@@ -50,19 +46,59 @@ class ContactListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_contact_list, container, false)
     }
 
-    fun enableRuntimePermission() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                (activity as HomeActivity),
-                Manifest.permission.READ_CONTACTS
-            )
-        ) {
+
+        recycler_view?.layoutManager = LinearLayoutManager(activity?.applicationContext)
+        recycler_view?.hasFixedSize()
+
+        sharedPreferences = this.requireActivity()
+            .getSharedPreferences("pref", Context.MODE_PRIVATE)
+        enableRuntimePermission()
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (!newText.equals("")){
+                    filter(newText!!)
+                }
+
+                return false
+            }
+        })
+    }
+
+    private fun filter(text: String) {
+        //new array list that will hold the filtered data
+        val filteredData = ArrayList < Contact > ()
+        //looping through existing elements and adding the element to filtered list
+        listContacts.filterTo(filteredData) {
+            //if the existing elements contains the search input
+            it.name?.lowercase()!!.contains(text.lowercase()) || it.number!!.contains(text)
+        }
+        //calling a method of the adapter class and passing the filtered list
+        adapter!!.filterList(filteredData)
+    }
+
+    private fun enableRuntimePermission() {
+
+        val permission = ActivityCompat.checkSelfPermission(
+            (activity as HomeActivity),
+            Manifest.permission.READ_CONTACTS)
+        if (permission == PackageManager.PERMISSION_GRANTED) {
+            println("permission that already got")
+            getContactList()
             Toast.makeText(
                 requireContext(),
                 "CONTACTS permission allows us to Access CONTACTS app",
                 Toast.LENGTH_LONG
             ).show()
         } else {
+            println("need to get permission")
             ActivityCompat.requestPermissions(
                 (activity as HomeActivity), arrayOf(
                     Manifest.permission.READ_CONTACTS
@@ -85,7 +121,7 @@ class ContactListFragment : Fragment() {
         while (emails!!.moveToNext()) {
             val email: String = emails!!.getString(emails!!.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS))
             Log.d("MailId","---------------------->${email }")
-            var contacts = Contact(email,"")
+            val contacts = Contact(email,"")
             listContacts.add(contacts)
         }
         while (cursor!!.moveToNext()) {
@@ -93,12 +129,12 @@ class ContactListFragment : Fragment() {
                 cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME ))
             phonenumber =
                 cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-            var contact = Contact(name = name!!, phonenumber!!)
+            val contact = Contact(name = name!!, phonenumber!!)
             listContacts.add(contact)
         }
         cursor!!.close()
         adapter = ContactAdapter(listContacts)
-        recycler_view!!.adapter = adapter
+        recycler_view?.adapter = adapter
     }
 
     // callback methods
@@ -107,16 +143,16 @@ class ContactListFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
-            RequestPermissionCode -> if (grantResults.size > 0 && grantResults.get(0) === PackageManager.PERMISSION_GRANTED) {
+            RequestPermissionCode -> if (grantResults.size > 0 && grantResults[0] === PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(
                     requireContext(),
                     "Permission Granted, Now your application can access CONTACTS.",
                     Toast.LENGTH_LONG
                 ).show()
 
-                var editor = sharedPreferences!!.edit()
+                val editor = sharedPreferences!!.edit()
                 editor.putBoolean("allowed", true)
-                editor.commit()
+                editor.apply()
                 getContactList()
             } else {
                 Toast.makeText(

@@ -37,4 +37,12 @@ class ContactAdapter(var listItems : ArrayList<Contact>) : RecyclerView.Adapter<
         holder.txtNumber.text = contact.number
     }
 
+    fun filterList(filteredData: ArrayList < Contact > ) {
+        Log.e("list", filteredData.toString())
+        Log.e("list", filteredData.size.toString())
+        // this.dataList.clear()
+        this.listItems = filteredData
+        notifyDataSetChanged()
+    }
+
 }
