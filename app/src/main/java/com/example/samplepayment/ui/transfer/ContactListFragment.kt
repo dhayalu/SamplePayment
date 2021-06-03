@@ -63,7 +63,9 @@ class ContactListFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (!newText.equals("")){
+                if (newText.equals("")){
+                    adapter!!.filterList(listContacts)
+                }else{
                     filter(newText!!)
                 }
 
@@ -124,6 +126,7 @@ class ContactListFragment : Fragment() {
             val contacts = Contact(email,"")
             listContacts.add(contacts)
         }
+        emails.close()
         while (cursor!!.moveToNext()) {
             name =
                 cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME ))
