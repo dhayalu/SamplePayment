@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.samplepayment.R
 import com.example.samplepayment.model.Contact
 
-class ContactAdapter(var listItems : ArrayList<Contact>) : RecyclerView.Adapter<ContactAdapter.MyViewHolder>() {
+class ContactAdapter(var listItems: ArrayList<Contact>,var i: Int) : RecyclerView.Adapter<ContactAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -18,7 +18,11 @@ class ContactAdapter(var listItems : ArrayList<Contact>) : RecyclerView.Adapter<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        var layoutInflater = LayoutInflater.from(parent.context).inflate(R.layout.cell_contact, parent, false)
+        var layoutInflater =
+        if(i==1)
+            LayoutInflater.from(parent.context).inflate(R.layout.cell_contact, parent, false)
+        else
+            LayoutInflater.from(parent.context).inflate(R.layout.gridcell_contact, parent, false)
 
         return MyViewHolder(layoutInflater)
     }

@@ -1,11 +1,15 @@
 package com.example.samplepayment.model
 
-class Contact(name:String, number:String) {
+class Contact() {
     var name: String? = null
     var number: String? = null
-    init {
+    var email:String?=null
+    constructor(name: String, number: String) : this() {
         this.name = name
         this.number = number
     }
+
+
+
 
 }

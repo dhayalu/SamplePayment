@@ -15,6 +15,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.samplepayment.HomeActivity
 import com.example.samplepayment.R
@@ -26,7 +27,9 @@ import kotlinx.android.synthetic.main.fragment_contact_list.*
 class ContactListFragment : Fragment() {
 
     var listContacts = ArrayList<Contact>()
+    var dummylist =ArrayList<Contact>()
     var adapter: ContactAdapter? = null
+    var grid_adapter: ContactAdapter? = null
     var cursor: Cursor? = null
     var name: String? = null
     var phonenumber:String? = null
@@ -37,7 +40,6 @@ class ContactListFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,10 +51,13 @@ class ContactListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        recycler_view1?.layoutManager = GridLayoutManager(activity?.applicationContext,4)
+        recycler_view1?.hasFixedSize()
 
         recycler_view?.layoutManager = LinearLayoutManager(activity?.applicationContext)
         recycler_view?.hasFixedSize()
 
+        getdummylist()
         sharedPreferences = this.requireActivity()
             .getSharedPreferences("pref", Context.MODE_PRIVATE)
         enableRuntimePermission()
@@ -72,6 +77,19 @@ class ContactListFragment : Fragment() {
                 return false
             }
         })
+    }
+
+     fun getdummylist() {
+
+        dummylist.add(Contact("Dhyalu","123456789"))
+        dummylist.add(Contact("Jay","128900977"))
+        dummylist.add(Contact("Gowtham","93456789"))
+        dummylist.add(Contact("Siva","97837266"))
+        dummylist.add(Contact("Ram","97897261"))
+
+        grid_adapter = ContactAdapter(dummylist,2)
+         Toast.makeText(requireContext(),dummylist.size.toString(),Toast.LENGTH_SHORT).show()
+        recycler_view1?.adapter = grid_adapter
     }
 
     private fun filter(text: String) {
@@ -136,8 +154,9 @@ class ContactListFragment : Fragment() {
             listContacts.add(contact)
         }
         cursor!!.close()
-        adapter = ContactAdapter(listContacts)
+        adapter = ContactAdapter(listContacts,1)
         recycler_view?.adapter = adapter
+
     }
 
     // callback methods
@@ -157,6 +176,7 @@ class ContactListFragment : Fragment() {
                 editor.putBoolean("allowed", true)
                 editor.apply()
                 getContactList()
+
             } else {
                 Toast.makeText(
                     requireContext(),

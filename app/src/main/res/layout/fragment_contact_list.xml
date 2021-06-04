@@ -13,11 +13,37 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="#0C635E5E"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Recent Contacts"
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed-light"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Phone Contacts"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:fontFamily="sans-serif-condensed-light"
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
+
         android:orientation="vertical" />
+
+
 </LinearLayout>
