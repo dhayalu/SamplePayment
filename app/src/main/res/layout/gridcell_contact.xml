@@ -13,7 +13,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="16dp"
         android:layout_weight="15"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/ic_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

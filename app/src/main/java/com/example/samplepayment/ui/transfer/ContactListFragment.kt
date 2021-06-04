@@ -29,11 +29,11 @@ class ContactListFragment : Fragment() {
     var listContacts = ArrayList<Contact>()
     var dummylist =ArrayList<Contact>()
     var adapter: ContactAdapter? = null
-    var grid_adapter: ContactAdapter? = null
-    var cursor: Cursor? = null
+    private var grid_adapter: ContactAdapter? = null
+    private var cursor: Cursor? = null
     var name: String? = null
-    var phonenumber:String? = null
-    val RequestPermissionCode = 1
+    private var phonenumber:String? = null
+    private val RequestPermissionCode = 1
     var sharedPreferences : SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +48,11 @@ class ContactListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_contact_list, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        enableRuntimePermission()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,7 +65,7 @@ class ContactListFragment : Fragment() {
         getdummylist()
         sharedPreferences = this.requireActivity()
             .getSharedPreferences("pref", Context.MODE_PRIVATE)
-        enableRuntimePermission()
+
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -139,7 +144,7 @@ class ContactListFragment : Fragment() {
         )
         val emails = (activity as HomeActivity).contentResolver.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, null, null, null)
         while (emails!!.moveToNext()) {
-            val email: String = emails!!.getString(emails!!.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS))
+            val email: String = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS))
             Log.d("MailId","---------------------->${email }")
             val contacts = Contact(email,"")
             listContacts.add(contacts)

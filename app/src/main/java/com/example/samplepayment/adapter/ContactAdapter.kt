@@ -18,7 +18,7 @@ class ContactAdapter(var listItems: ArrayList<Contact>,var i: Int) : RecyclerVie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        var layoutInflater =
+        val layoutInflater =
         if(i==1)
             LayoutInflater.from(parent.context).inflate(R.layout.cell_contact, parent, false)
         else
@@ -36,7 +36,7 @@ class ContactAdapter(var listItems: ArrayList<Contact>,var i: Int) : RecyclerVie
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        var contact : Contact = listItems[position]
+        val contact : Contact = listItems[position]
         holder.txtName.text = contact.name
         holder.txtNumber.text = contact.number
     }
@@ -44,7 +44,7 @@ class ContactAdapter(var listItems: ArrayList<Contact>,var i: Int) : RecyclerVie
     fun filterList(filteredData: ArrayList < Contact > ) {
         Log.e("list", filteredData.toString())
         Log.e("list", filteredData.size.toString())
-        // this.dataList.clear()
+
         this.listItems = filteredData
         notifyDataSetChanged()
     }

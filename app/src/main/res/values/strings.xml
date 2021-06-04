@@ -19,4 +19,6 @@
     <string name="contact_list">Contact List</string>
     <string name="saket_newaskar">Saket Newaskar</string>
     <string name="welcome_to_android">Welcome to Android</string>
+    <string name="recent_recipient">Recent Recipient</string>
+    <string name="my_recipient">My Recipient</string>
 </resources>

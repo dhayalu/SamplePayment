@@ -15,7 +15,7 @@
         android:background="#0C635E5E"/>
     <TextView
         android:layout_width="wrap_content"
-        android:text="Recent Contacts"
+        android:text="@string/recent_recipient"
         android:padding="5dp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed-light"
@@ -31,7 +31,7 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:text="Phone Contacts"
+        android:text="@string/my_recipient"
         android:textStyle="bold"
         android:padding="5dp"
         android:fontFamily="sans-serif-condensed-light"

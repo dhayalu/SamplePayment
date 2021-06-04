@@ -4,8 +4,8 @@ import com.example.samplepayment.model.Contact
 
 class ContactValidator {
 
-    fun validateSingleContactList(arrayContact: ArrayList<Contact>) : Boolean {
-        return (arrayContact.size == 1)
+    fun validateSingleContact(contact: Contact) : Boolean {
+        return (contact != null)
     }
 
     fun validateAllContactLists(arrayContact: ArrayList<Contact>) : Boolean {
@@ -21,7 +21,7 @@ class ContactValidator {
     }
 
     fun validateEmail(email : String) : Boolean {
-        var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         return (email.matches(emailPattern.toRegex()))
     }
 }

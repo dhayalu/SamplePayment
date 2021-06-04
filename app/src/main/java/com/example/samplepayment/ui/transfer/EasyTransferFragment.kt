@@ -32,7 +32,7 @@ class EasyTransferFragment : Fragment() {
         _binding = FragmentEasyTransferBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
+        
         return root
     }
 
