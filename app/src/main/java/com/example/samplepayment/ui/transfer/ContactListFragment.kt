@@ -88,7 +88,7 @@ class ContactListFragment : Fragment() {
         dummylist.add(Contact("Ram","97897261"))
 
         grid_adapter = ContactAdapter(dummylist,2)
-         Toast.makeText(requireContext(),dummylist.size.toString(),Toast.LENGTH_SHORT).show()
+         //Toast.makeText(requireContext(),dummylist.size.toString(),Toast.LENGTH_SHORT).show()
         recycler_view1?.adapter = grid_adapter
     }
 
